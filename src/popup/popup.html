@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeetCode Helper</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🧠 LeetCode Helper</h1>
+      <p class="tagline">Learn by thinking, not copying</p>
+    </header>
+
+    <div id="problem-section" class="section">
+      <div id="problem-info" class="hidden">
+        <h3 id="problem-title" class="problem-title"></h3>
+        <span id="problem-difficulty" class="badge"></span>
+      </div>
+      <div id="no-problem" class="hidden">
+        <p class="warning-text">⚠️ No LeetCode problem detected</p>
+        <p class="help-text">
+          Navigate to a LeetCode problem page and click the extension icon again.
+        </p>
+      </div>
+    </div>
+
+    <div id="hint-section" class="section hidden">
+      <h3>Select Hint Level</h3>
+      <div class="hint-levels">
+        <button class="hint-btn" data-level="1">
+          <strong>Level 1: Pattern & Data Structure</strong>
+          <span>High-level guidance on approach</span>
+        </button>
+        <button class="hint-btn" data-level="2">
+          <strong>Level 2: Strategy & Trade-offs</strong>
+          <span>Time/space complexity considerations</span>
+        </button>
+        <button class="hint-btn" data-level="3">
+          <strong>Level 3: Algorithm Steps</strong>
+          <span>Pseudocode-level direction</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="hint-display" class="section hidden">
+      <h3>💡 Your Hint</h3>
+      <div id="hint-content" class="hint-content"></div>
+      <button id="next-level-btn" class="secondary-btn">
+        Get Next Level Hint
+      </button>
+    </div>
+
+    <div id="loading" class="section hidden">
+      <div class="spinner"></div>
+      <p class="loading-text">Generating hint...</p>
+    </div>
+
+    <div id="error" class="section hidden error-box">
+      <p id="error-message" class="error-text"></p>
+      <button id="dismiss-error" class="dismiss-btn">Got it</button>
+    </div>
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>
