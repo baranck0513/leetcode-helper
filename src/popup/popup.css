@@ -240,3 +240,21 @@ button {
 .dismiss-btn:hover {
   background: #ffb300;
 }
+
+.footer-section {
+  margin-top: 4px;
+}
+
+.history-btn {
+  background: transparent;
+  color: #667eea;
+  border: 1px solid #667eea;
+  font-size: 12px;
+  padding: 8px;
+  width: 100%;
+}
+
+.history-btn:hover {
+  background: #667eea;
+  color: white;
+}

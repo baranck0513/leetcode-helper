@@ -5,7 +5,8 @@ module.exports = {
   entry: {
     'background/service-worker': './src/background/service-worker.ts',
     'content/content-script': './src/content/content-script.ts',
-    'popup/popup': './src/popup/popup.ts'
+    'popup/popup': './src/popup/popup.ts',
+    'options/options': './src/options/options.ts'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -30,7 +31,9 @@ module.exports = {
         { from: 'public/manifest.json', to: 'manifest.json' },
         { from: 'public/icons', to: 'icons' },
         { from: 'src/popup/popup.html', to: 'popup/popup.html' },
-        { from: 'src/popup/popup.css', to: 'popup/popup.css' }
+        { from: 'src/popup/popup.css', to: 'popup/popup.css' },
+        { from: 'src/options/options.html', to: 'options/options.html' },
+        { from: 'src/options/options.css', to: 'options/options.css' }
       ]
     })
   ],

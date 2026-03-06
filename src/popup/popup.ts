@@ -199,4 +199,8 @@ dismissErrorBtn.addEventListener('click', () => {
   hideError();
 });
 
+document.getElementById('view-history-btn')!.addEventListener('click', () => {
+  chrome.runtime.openOptionsPage();
+});
+
 init();
