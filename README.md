@@ -117,18 +117,10 @@ The extension:
 4. Provides hints specific to that pattern
 5. Falls back to generic hints if no pattern matches
 
-## Educational Philosophy
-
-LeetCode Helper is built on the principle of **guided discovery**:
-- Students learn better by thinking through problems
-- Progressive hints prevent frustration without eliminating struggle
-- Pattern recognition teaches transferable problem-solving skills
-- No solution spoilers maintain the learning value
-
 ## Author
 
 Built with the goal of making DSA learning more effective through guided practice.
 
 ---
 
-**Note**: I built this extension for educational purposes to help students learn problem solving strategies, not to bypass the learning process.
+**Note**: I built this extension for educational purposes to help students learn problem solving strategies, not to bypass the learning process
