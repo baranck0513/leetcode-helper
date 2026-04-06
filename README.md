@@ -1,126 +1,158 @@
-# LeetCode Helper
+# <p align="center"> LeetCode Helper
 
-A Chrome extension that provides progressive hints for LeetCode problems to help you learn without spoiling solutions.
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-orange?logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](https://github.com/baranck0513/leetcode-helper/pulls)
+
+[Chrome WebStore Link](https://chromewebstore.google.com/detail/leetcode-helper/fgdgpjebbdgafhapfbgjiifcecemdgic)
+
+A Chrome extension that provides **progressive, pattern-based hints** for LeetCode problems — guiding your thinking without spoiling the solution.
 
 ## The Problem
 
-When stuck on LeetCode problems, students often jump straight to solutions, missing the learning opportunity. LeetCode Helper provides **progressive hints** that guide your thinking without spoiling the answer.
+When stuck on a LeetCode problem, most students jump straight to the solution and miss the learning opportunity entirely. LeetCode Helper bridges that gap by recognizing the algorithmic pattern behind the problem and offering hints at three escalating levels of detail.
+
+## Features
+
+- **Pattern Recognition** — Automatically detects 15+ common DSA patterns from the problem title and description
+- **Progressive Hints** — Three hint levels that increase in detail, so you always stay in control
+- **Hint History** — Remembers where you left off on every problem via Chrome local storage
+- **Fully Offline** — No API calls, no tracking. Everything runs locally in your browser
+- **Manifest V3** — Built on the latest Chrome extension standard
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js and npm
+- Google Chrome
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/baranck0513/leetcode-helper.git
+cd leetcode-helper
+
+# Install dependencies
+npm install
+
+# Build the extension
+npm run build
+```
+
+Then load it in Chrome:
+
+1. Open `chrome://extensions/`
+2. Enable **Developer mode** (toggle in the top right)
+3. Click **Load unpacked**
+4. Select the `dist` folder
+
+### Usage
+
+1. Navigate to any LeetCode problem page (e.g. `leetcode.com/problems/two-sum`)
+2. Click the **LeetCode Helper** icon in your toolbar
+3. Choose a hint level — start with Level 1 and work your way up
+4. Try to solve the problem with that hint before requesting more
+
+The extension remembers your hint history per problem so you can always pick up where you left off.
 
 ## How It Works
 
-LeetCode Helper uses **pattern recognition** to identify common algorithmic patterns in problems and provides hints at three levels:
+### Pattern Matching
 
-- **Level 1**: High-level guidance (data structures & patterns)
-- **Level 2**: Strategic reasoning (time/space trade-offs)
-- **Level 3**: Algorithm steps (pseudocode direction)
+When you open the popup, the content script extracts the problem title and description from the LeetCode DOM. The hint engine then searches for keywords associated with known algorithmic patterns and picks the best match:
 
-### Pattern Database
+```
+Problem: "Given an array, find two numbers that sum to target"
+  ↓
+Keyword scan: "array", "sum", "two" → matches Two Sum / Hash Map pattern
+  ↓
+Return hints[0..2] for that pattern
+```
 
-The extension recognizes 15+ common DSA patterns:
-- Two Sum / Hash Map patterns
+If no pattern matches, the extension falls back to generic DSA guidance.
+
+### Hint Levels
+
+Each recognized pattern includes three hints of increasing specificity:
+
+| Level | Focus | Example |
+|-------|-------|---------|
+| **1** | Data structure & pattern | *"Think about what data structure lets you look up values in O(1)"* |
+| **2** | Trade-offs & complexity | *"Consider the time/space complexity. Can you do better than O(n²)?"* |
+| **3** | Algorithm direction | *"Iterate once. At each element, check if its complement already exists in your map"* |
+
+### Supported Patterns
+
+The extension recognizes the following patterns:
+
+- Two Sum / Hash Map
 - Linked List manipulation
-- Stack/Queue problems
+- Stack / Queue problems
 - Binary Search
 - Sliding Window
 - Dynamic Programming
-- Graph traversal (BFS/DFS)
+- Graph traversal (BFS / DFS)
 - Two Pointers
 - Backtracking
 - Prefix Sum
 - Greedy algorithms
-- And more
-
-## Features
-
-- **Pattern-Based Hints** - Recognizes common DSA patterns automatically
-- **Progressive Learning** - Three hint levels that increase in detail
-- **Hint History** - Remembers where you left off on each problem
-- **No Spoilers** - Designed to guide, never give complete solutions
-- **Instant** - No API calls, works offline
-
-## Installation
-
-### From Source
-
-1. Clone this repository
-```bash
-git clone https://github.com/baranck0513/leetcode-helper.git
-cd leetcode-helper
-```
-
-2. Install dependencies
-```bash
-npm install
-```
-
-3. Build the extension
-```bash
-npm run build
-```
-
-4. Load in Chrome
-- Open Chrome and go to `chrome://extensions/`
-- Enable "Developer mode" (top right)
-- Click "Load unpacked"
-- Select the `dist` folder
-
-## Usage
-
-1. Navigate to any LeetCode problem page
-2. Click the LeetCode Helper extension icon
-3. Select a hint level (1, 2, or 3)
-4. Read the hint and try to solve the problem
-5. Request higher-level hints if needed
-
-The extension will remember your progress on each problem!
+- Merge operations
+- Palindromes
+- Valid parentheses / bracket matching
+- And more — the pattern database in `src/utils/hint-patterns.ts` is easy to extend
 
 ## Development
-```bash
-# Install dependencies
-npm install
 
-# Development mode (watch for changes)
+```bash
+# Watch mode — rebuilds on every file change
 npm run dev
 
 # Production build
 npm run build
 
-# Type checking
+# TypeScript type checking (no output)
 npm run type-check
 ```
 
-## Project Structure
+### Project Structure
+
 ```
 src/
-├── background/           # Service worker
-├── content/             # Reads LeetCode problem from page
-├── popup/               # Extension popup UI
-├── types/               # TypeScript definitions
+├── background/
+│   └── service-worker.ts       # Extension lifecycle & message routing
+├── content/
+│   └── content-script.ts       # Extracts problem data from LeetCode DOM
+├── popup/
+│   ├── popup.html              # Extension popup UI
+│   ├── popup.css
+│   └── popup.ts                # Hint display & level selection logic
+├── options/
+│   ├── options.html            # Hint history page
+│   ├── options.css
+│   └── options.ts              # History management
+├── types/
+│   └── index.ts                # Shared TypeScript interfaces & enums
 └── utils/
-    ├── hint-patterns.ts    # Pattern recognition & hints
-    └── storage.ts          # Chrome storage helpers
+    ├── hint-patterns.ts         # Pattern database & hint generation
+    └── storage.ts               # Chrome local storage helpers
 ```
 
-## Tech Stack
+### Completed
 
-- **TypeScript** - Type safety and better code organization
-- **Chrome Extensions API (Manifest V3)** - Modern extension architecture
-- **Webpack** - Bundling and build process
-- **Pattern Matching** - Custom algorithm for recognizing problem types
+- [x] Chrome Web Store release
+- [x] Pattern recognition engine
+- [x] Three-level progressive hints
+- [x] Hint history with per-problem tracking
+- [x] Offline-first, no external API calls
+- [x] Manifest V3 architecture
 
-## How Pattern Recognition Works
+</details>
 
-The extension:
-1. Extracts the problem title and description from LeetCode DOM
-2. Searches for keywords associated with known patterns
-3. Returns the pattern with the most keyword matches
-4. Provides hints specific to that pattern
-5. Falls back to generic hints if no pattern matches
+## Requirements
 
-## Author
-
-Built with the goal of making DSA learning more effective through guided practice.
-
----
-
-**Note**: I built this extension for educational purposes to help students learn problem solving strategies, not to bypass the learning process
+- **Node.js**: 18+
+- **Chrome**: 112+ (Manifest V3)
+- **npm**: 9+
